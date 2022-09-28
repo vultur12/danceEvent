@@ -16,16 +16,6 @@ public enum OptionMenu {
         this.description = description;
     }
 
-    public void printOptions() {
-        System.out.println("");
-        System.out.println("****************************************************************");
-        System.out.println("Dostępne opcje:");
-        for (OptionMenu value : OptionMenu.values()) {
-            System.out.println(value);
-        }
-        System.out.println("****************************************************************");
-    }
-
     public int getValue() {
         return value;
     }

@@ -35,7 +35,7 @@ public class EventControl {
     public void controlLoop(){
         OptionMenu optionMenu = null;
         do{
-            optionMenu.printOptions();
+            printOptionsMenu();
             optionMenu = getOption();
 
             switch (optionMenu) {
@@ -95,6 +95,25 @@ public class EventControl {
         return optionMenu;
     }
 
+    public void printOptionsMenu() {
+        System.out.println("");
+        System.out.println("****************************************************************");
+        System.out.println("Dostępne opcje:");
+        for (OptionMenu value : OptionMenu.values()) {
+            System.out.println(value);
+        }
+        System.out.println("****************************************************************");
+    }
+
+    public void printOptionsFilter() {
+        System.out.println("");
+        System.out.println("****************************************************************");
+        System.out.println("Dostępne opcje:");
+        for (OptionFilter value : OptionFilter.values()) {
+            System.out.println(value);
+        }
+        System.out.println("****************************************************************");
+    }
     private void exit() {
         try {
             fileManager.exportData(schedule);

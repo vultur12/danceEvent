@@ -32,16 +32,6 @@ public enum OptionFilter {
         this.description = description;
     }
 
-    public static void printOptions() {
-        System.out.println("");
-        System.out.println("****************************************************************");
-        System.out.println("Dostępne opcje:");
-        for (OptionMenu value : OptionMenu.values()) {
-            System.out.println(value);
-        }
-        System.out.println("****************************************************************");
-    }
-
     @Override
     public String toString() {
         return value + " " + description;
