@@ -80,23 +80,6 @@ public class EventControl {
                     || x.getClassName().toLowerCase().contains("s4");
         };
 
-        Predicate<DanceClass> checkIfInstruktor = (x) -> {
-            String additionalOption;
-            ConsolPrinter consolPrinter = new ConsolPrinter();
-            consolPrinter.printLine("Podaj intruktora");
-            additionalOption = dataReader.getString();
-            return x.getClassName().toLowerCase().contains(additionalOption.toLowerCase());
-        };
-
-        Predicate<DanceClass> checkIfDanceStyle = (x) -> {
-            String additionalOption;
-            ConsolPrinter consolPrinter = new ConsolPrinter();
-            consolPrinter.printLine("Podaj styl tańca");
-            additionalOption = dataReader.getString();
-            return x.getClassName().toLowerCase().contains(additionalOption.toLowerCase());
-        };
-
-
         do{
             printOptionsFilter();
             optionFilter = getOptionFilter();
@@ -124,8 +107,6 @@ public class EventControl {
                     break;
             }
         }while(optionFilter != OptionFilter.EXIT);
-        //Schedule.showFilteredSchedule();*/
-
     }
 
     private void printDanceClass() {

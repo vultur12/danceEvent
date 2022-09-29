@@ -30,16 +30,8 @@ public class Schedule implements Serializable {
     }
 
     public void printFilteredDanceClass( Predicate<DanceClass> predicate) {
-/*        List<DanceClass> danceClasses = danceClassesMap.get("poniedziałek");
-        danceClasses = danceClasses.stream()
-                .filter(predicate)
-                .collect(Collectors.toList());
-        danceClasses.forEach(x -> System.out.println(x.toCSV()));
-        danceClassesMap.put("poniedziałek",danceClasses);*/
-
-
         Set<Map.Entry<String, List<DanceClass>>> entries = danceClassesMap.entrySet();
-        HashMap<String, List<DanceClass>> danceClassesMapResult = (HashMap<String, List<DanceClass>>) entries.stream()
+        HashMap<String, List<DanceClass>> danceClassesMapResult = (HashMap<String, List<DanceClass>>) entries.stream()  // poprawić kojeność zapisu tak jak LinkedHashMap
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         danceClassesMapResult.forEach( ( k, v ) -> {
@@ -47,15 +39,8 @@ public class Schedule implements Serializable {
              danceClasses = danceClasses.stream()
                      .filter(predicate)
                      .collect(Collectors.toList());
-            //danceClasses.forEach(x -> System.out.println(x.toCSV()));
             danceClassesMapResult.put(k, danceClasses);
         });
-        danceClassesMapResult.forEach( ( k, v ) -> {
-                    System.out.println(k);
-                    for (DanceClass danceClass : v) {
-                        System.out.println(danceClass.toString());
-                    }
-                }
-        );
+        showSchedule(danceClassesMapResult);
     }
 }
