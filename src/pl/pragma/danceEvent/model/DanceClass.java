@@ -11,6 +11,13 @@ public class DanceClass implements Serializable {
     private String classStartHour;
     private String classEndHour;
 
+    public String getClassName() {
+        return className;
+    }
+
+    public String getClassInstructor() {
+        return classInstructor.toString();
+    }
 
     public DanceClass(String schoolName, String className, Instruktor classInstructor, String classStartHour, String classEndHour) {
         this.schoolName = schoolName;

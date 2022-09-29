@@ -12,6 +12,7 @@ import pl.pragma.danceEvent.model.Schedule;
 import pl.pragma.danceEvent.webscrape.WebScrape;
 
 import java.util.InputMismatchException;
+import java.util.function.Predicate;
 
 public class EventControl {
     private ConsolPrinter printer = new ConsolPrinter();
@@ -33,10 +34,10 @@ public class EventControl {
         }
 
     public void controlLoop(){
-        OptionMenu optionMenu = null;
+        OptionMenu optionMenu;
         do{
             printOptionsMenu();
-            optionMenu = getOption();
+            optionMenu = getOptionMenu();
 
             switch (optionMenu) {
                 case GET_DANCE_CLASSES_FROM_WEB:
@@ -49,7 +50,7 @@ public class EventControl {
                     printDanceClass();
                     break;
                 case FILTER_DANCE_CLASSES:
-                    printFilteredDanceClass();
+                    filteredDanceClass();
                     break;
                 case EXIT:
                     exit();
@@ -60,17 +61,75 @@ public class EventControl {
         }while(optionMenu != OptionMenu.EXIT);
     }
 
-    private void printFilteredDanceClass() {
+    private void filteredDanceClass() {
         OptionFilter optionFilter;
-        /*do{
-            printFilteredDanceClass();
-        }
-        Schedule.showFilteredSchedule();*/
+
+        Predicate<DanceClass> checkIfLevelP = (x) -> {
+            return x.getClassName().toLowerCase().contains("p open")
+                    || x.getClassName().toLowerCase().contains("p1")
+                    || x.getClassName().toLowerCase().contains("p2")
+                    || x.getClassName().toLowerCase().contains("p3")
+                    || x.getClassName().toLowerCase().contains("p4");
+        };
+
+        Predicate<DanceClass> checkIfLevelS = (x) -> {
+            return x.getClassName().toLowerCase().contains("s open")
+                    || x.getClassName().toLowerCase().contains("s1")
+                    || x.getClassName().toLowerCase().contains("s2")
+                    || x.getClassName().toLowerCase().contains("s3")
+                    || x.getClassName().toLowerCase().contains("s4");
+        };
+
+        Predicate<DanceClass> checkIfInstruktor = (x) -> {
+            String additionalOption;
+            ConsolPrinter consolPrinter = new ConsolPrinter();
+            consolPrinter.printLine("Podaj intruktora");
+            additionalOption = dataReader.getString();
+            return x.getClassName().toLowerCase().contains(additionalOption.toLowerCase());
+        };
+
+        Predicate<DanceClass> checkIfDanceStyle = (x) -> {
+            String additionalOption;
+            ConsolPrinter consolPrinter = new ConsolPrinter();
+            consolPrinter.printLine("Podaj styl tańca");
+            additionalOption = dataReader.getString();
+            return x.getClassName().toLowerCase().contains(additionalOption.toLowerCase());
+        };
+
+
+        do{
+            printOptionsFilter();
+            optionFilter = getOptionFilter();
+            String additionalOption;
+            ConsolPrinter consolPrinter = new ConsolPrinter();
+
+            switch (optionFilter) {
+                case EXIT :
+                    break;
+                case INSTRUCTOR:
+                    consolPrinter.printLine("Podaj instruktora");
+                    additionalOption = dataReader.getString();
+                    schedule.printFilteredDanceClass(x -> x.getClassInstructor().toLowerCase().contains(additionalOption.toLowerCase()));
+                    break;
+                case DANCE_STYLE:
+                    consolPrinter.printLine("Podaj styl tańca");
+                    additionalOption = dataReader.getString();
+                    schedule.printFilteredDanceClass(x -> x.getClassName().toLowerCase().contains(additionalOption.toLowerCase()));
+                    break;
+                case LEVEL_P:
+                    schedule.printFilteredDanceClass(checkIfLevelP);
+                    break;
+                case LEVEL_S:
+                    schedule.printFilteredDanceClass(checkIfLevelS);
+                    break;
+            }
+        }while(optionFilter != OptionFilter.EXIT);
+        //Schedule.showFilteredSchedule();*/
 
     }
 
     private void printDanceClass() {
-        Schedule.showSchedule();
+        Schedule.showSchedule(Schedule.getDanceClassesMap());
     }
 
     private void downloadDanceClass() {
@@ -79,12 +138,28 @@ public class EventControl {
         printer.printLine("Pobrano dane ze strony.");
     }
 
-    private OptionMenu getOption() {
+    private OptionMenu getOptionMenu() {
         boolean optionOK = true;
         OptionMenu optionMenu = null;
         while (optionOK){
             try {
                 optionMenu = OptionMenu.createFromInt(dataReader.getInt());
+                optionOK = false;
+            }catch ( NoSuchOptionException e ){
+                printer.printLine(e.getMessage());
+            }catch ( InputMismatchException e ){
+                printer.printLine("Wprowadzono wartość która nie jest liczbą");
+            }
+        }
+        return optionMenu;
+    }
+
+    private OptionFilter getOptionFilter() {
+        boolean optionOK = true;
+        OptionFilter optionMenu = null;
+        while (optionOK){
+            try {
+                optionMenu = OptionFilter.createFromInt(dataReader.getInt());
                 optionOK = false;
             }catch ( NoSuchOptionException e ){
                 printer.printLine(e.getMessage());

@@ -2,7 +2,7 @@ package pl.pragma.danceEvent.app;
 
 class AppEvents {
     public static final String APP_NAME = "DanceEvents";
-    public static final String APP_VERSION = "0.2";
+    public static final String APP_VERSION = "1.2";
 
     public static void main(String[] args) {
 

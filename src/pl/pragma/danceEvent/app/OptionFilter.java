@@ -2,11 +2,11 @@ package pl.pragma.danceEvent.app;
 import pl.pragma.danceEvent.exception.NoSuchOptionException;
 
 public enum OptionFilter {
-    INSTRUCTOR (0, "Instruktor"),
-    DANCE_STYLE(1, "Styl taneczny"),
-    LEVEL_P(2, "Poziom zajęć P"),
-    LEVEL_S(3, "Poziom zajęć S"),
-    DAY_OF_WEEK(4, "Dzień tygodnia");
+    EXIT (0, "Wyjście z filtrowania"),
+    INSTRUCTOR (1, "Instruktor"),
+    DANCE_STYLE(2, "Styl taneczny"),
+    LEVEL_P(3, "Poziom zajęć P"),
+    LEVEL_S(4, "Poziom zajęć S");
 
     private int value;
     private String description;
